@@ -1,0 +1,3 @@
+rootProject.name = 'thmuzic'
+
+include ':app'
