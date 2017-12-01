@@ -31,52 +31,42 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-export default class App extends Component<{}> {
+export default class artistScreen extends Component<{}> {
   render() {
     return (
       <Container style={{ backgroundColor: "#ffffff" }}>
         <Header>
           <Left>
             <Button transparent>
-              <Icon name="menu" />
+              <Icon name="arrow-back" />
             </Button>
           </Left>
           <Body>
-            <Title>TH muzik</Title>
+            <Title>Nghệ sĩ</Title>
           </Body>
+          
         </Header>
         <Content>
           <List>
             <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("./images/icons/like.png")} />
+              <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
-                <Button transparent>
-                  <Text>Bài hát yêu thích</Text>
-                </Button>
+                  <Text numberOfLines={1}>Tên ca sĩ</Text>
+                  <Text note>1 Bài hát | 1 Album</Text>
               </Body>
             </ListItem>
             <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("./images/icons/music.png")} />
+              <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
-                <Button transparent>
-                  <Text>Tất cả bài hát</Text>
-                </Button>
+                  <Text numberOfLines={1}>Tên ca sĩ</Text>
+                  <Text note>1 Bài hát | 1 Album</Text>
               </Body>
             </ListItem>
             <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("./images/icons/album.png")} />
+              <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
-                <Button transparent>
-                  <Text>Albums</Text>
-                </Button>
-              </Body>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("./images/icons/artist.png")} />
-              <Body>
-                <Button transparent>
-                <Text>Nghệ sĩ</Text>
-                </Button>
+                  <Text numberOfLines={1}>Tên ca sĩ</Text>
+                  <Text note>1 Bài hát | 1 Album</Text>
               </Body>
             </ListItem>
           </List>
