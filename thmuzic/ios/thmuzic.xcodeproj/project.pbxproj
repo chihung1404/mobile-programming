@@ -48,7 +48,6 @@
 		78153803114C407B9B611FC6 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F960AA2E13AC4F1E9E0601C1 /* rubicon-icon-font.ttf */; };
 		B209215F7DD84FD6AD3CAAD5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 580246FFC2E545F0A2AC3C24 /* SimpleLineIcons.ttf */; };
 		A1E2953F0AC64054BC1549EB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82D792FBCD3840DAA5254537 /* Zocial.ttf */; };
-		04D32530BD6C458FA0597CC6 /* libRNMusicMetadata.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0E2E85CCD6442F89B9F66B9 /* libRNMusicMetadata.a */; };
 		DC42601D14B449418C944005 /* libRNReactNativeGetMusicFiles.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B0AB0C0AF04B7BA4D0D0F1 /* libRNReactNativeGetMusicFiles.a */; };
 /* End PBXBuildFile section */
 
@@ -289,8 +288,6 @@
 		F960AA2E13AC4F1E9E0601C1 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		580246FFC2E545F0A2AC3C24 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		82D792FBCD3840DAA5254537 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A40BECB57FD04AB0B0B54364 /* RNMusicMetadata.xcodeproj */ = {isa = PBXFileReference; name = "RNMusicMetadata.xcodeproj"; path = "../node_modules/react-native-music-metadata/RNMusicMetadata.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		C0E2E85CCD6442F89B9F66B9 /* libRNMusicMetadata.a */ = {isa = PBXFileReference; name = "libRNMusicMetadata.a"; path = "libRNMusicMetadata.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		AE0BA4EF153A4C2B9B7F9D3D /* RNReactNativeGetMusicFiles.xcodeproj */ = {isa = PBXFileReference; name = "RNReactNativeGetMusicFiles.xcodeproj"; path = "../node_modules/react-native-get-music-files/ios/RNReactNativeGetMusicFiles.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		A8B0AB0C0AF04B7BA4D0D0F1 /* libRNReactNativeGetMusicFiles.a */ = {isa = PBXFileReference; name = "libRNReactNativeGetMusicFiles.a"; path = "libRNReactNativeGetMusicFiles.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
@@ -321,7 +318,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				04D32530BD6C458FA0597CC6 /* libRNMusicMetadata.a in Frameworks */,
 				DC42601D14B449418C944005 /* libRNReactNativeGetMusicFiles.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,7 +487,6 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				A40BECB57FD04AB0B0B54364 /* RNMusicMetadata.xcodeproj */,
 				AE0BA4EF153A4C2B9B7F9D3D /* RNReactNativeGetMusicFiles.xcodeproj */,
 			);
 			name = Libraries;
@@ -1073,12 +1068,9 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/thmuzic.app/thmuzic";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
 					"$(SRCROOT)\..\node_modules\react-native-get-music-files\ios",
 				);
 			};
@@ -1100,12 +1092,9 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/thmuzic.app/thmuzic";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
 					"$(SRCROOT)\..\node_modules\react-native-get-music-files\ios",
 				);
 			};
@@ -1128,7 +1117,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
 					"$(SRCROOT)\..\node_modules\react-native-get-music-files\ios",
 				);
 			};
@@ -1150,7 +1138,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
 					"$(SRCROOT)\..\node_modules\react-native-get-music-files\ios",
 				);
 			};
@@ -1181,12 +1168,9 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
 					"$(SRCROOT)\..\node_modules\react-native-get-music-files\ios",
 				);
 			};
@@ -1217,12 +1201,9 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
 					"$(SRCROOT)\..\node_modules\react-native-get-music-files\ios",
 				);
 			};
@@ -1248,8 +1229,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1274,8 +1253,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;

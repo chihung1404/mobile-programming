@@ -24,6 +24,8 @@ import {
   Thumbnail
 } from "native-base";
 
+import MusicFiles from "react-native-get-music-files";
+
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android:
@@ -32,6 +34,30 @@ const instructions = Platform.select({
 });
 
 export default class songsScreen extends Component<{}> {
+  constructor(props) {
+    super(props);
+    var data = MusicFiles.getAll(
+      {
+        blured: true, // works only when 'cover' is set to true
+        artist: true,
+        duration: true, //default : true
+        cover: false, //default : true,
+        genre: true,
+        title: true,
+        cover: true,
+        date: true,
+        lyrics: true,
+        comments: true,
+        minimumSongDuration: 10000, // get songs bigger than 10000 miliseconds duration,
+      },
+      error => {
+        alert("ERROR: " + error);
+      },
+      response => {
+        alert(JSON.stringify(response));
+      }
+    );
+  }
   render() {
     return (
       <Container style={{ backgroundColor: "#ffffff" }}>
@@ -46,47 +72,20 @@ export default class songsScreen extends Component<{}> {
           </Body>
         </Header>
         <Content>
-          <List>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
+          <List dataArray = {data}>
+          renderRow={
+            (item)=>
+            <ListItem style={{ borderBottomWidth: 0 }}>
+            <Thumbnail square source={{ uri: item.cover }} />
+            <Body>
+              <Text numberOfLines={1}>item.title</Text>
+              <Text note />
+            </Body>
+            <Right>
+              <Text note>item.duration</Text>
+            </Right>
+          </ListItem>
+          }>
           </List>
         </Content>
       </Container>
