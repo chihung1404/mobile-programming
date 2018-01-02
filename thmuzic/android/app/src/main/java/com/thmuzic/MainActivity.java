@@ -1,6 +1,7 @@
 package com.thmuzic;
 
 import com.facebook.react.ReactActivity;
+import com.venepe.RNMusicMetadata.RNMusicMetadataPackage; // <------- add package
 
 import com.rnfs.RNFSPackage; // <------- add package
 

@@ -33,10 +33,11 @@ const instructions = Platform.select({
 });
 
 export default class playScreen extends Component<{}> {
-  static navigationOptions = {
-    title: 'Song Title',
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.songTitle}`,
+  });
   render() {
+    const { params } = this.props.navigation.state;
     return (
       <Container style={{ backgroundColor: "#0xE9E9EF" }}>
         <Content>

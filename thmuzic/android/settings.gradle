@@ -1,4 +1,6 @@
 rootProject.name = 'thmuzic'
+include ':react-native-music-metadata'
+project(':react-native-music-metadata').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-music-metadata/android')
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
 

@@ -25,6 +25,9 @@ import {
   Thumbnail
 } from "native-base";
 
+// import the module
+import RNMusicMetadata from "react-native-music-metadata";
+
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android:
@@ -32,32 +35,39 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
+function a(string){
+
+}
+
 export default class songsScreen extends Component<{}> {
   static navigationOptions = {
     title: "All songs"
   };
+  
   constructor(props) {
     super(props);
-
     var datab = [];
     this.state = {
       dataSource: datab
     };
     var RNFS = require("react-native-fs");
     var dir = RNFS.ExternalStorageDirectoryPath + "/Music";
-    console.log(dir);
     RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-      .then(result => {
-        console.log("GOT RESULT", result);
+      .then((result) => {
         for (index = 0; index < result.length; ++index) {
           console.log("resultIndex", result[index]);
-          datab.push(result[index]);
+          RNMusicMetadata.getMetadata([result[index].path])
+          .then(tracks => {
+            console.log(tracks[0]);
+            datab.push(tracks[0]);
+            console.log("datab", datab);
+            this.setState({ ...this.state.dataSource, datab });
+          })
+          .catch(err => {
+            console.error(err);
+          });
         }
-        this.setState({ ...this.state.dataSource, datab });
       });
-
-    console.log("datab", datab);
-    console.log("datasource", this.state.dataSource);
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -69,7 +79,7 @@ export default class songsScreen extends Component<{}> {
             renderRow={item => (
               <ListItem
                 style={{ borderBottomWidth: 0, backgroundColor: "#0xE9E9EF" }}
-                onPress={() => navigate("Play")}
+                onPress={() => navigate("Play",{songTitle: item.title})}
                 title="All songs"
               >
                 <Thumbnail
@@ -77,11 +87,11 @@ export default class songsScreen extends Component<{}> {
                   source={require("../images/icons/music.png")}
                 />
                 <Body>
-                  <Text numberOfLines={2}>{item.name}</Text>
+                  <Text numberOfLines={2}>{item.title}</Text>
                   <Text note />
                 </Body>
                 <Right>
-                  <Text note />
+                  <Text note>{Math.round(item.duration/60 * 100) / 100}</Text>
                 </Right>
               </ListItem>
             )}
