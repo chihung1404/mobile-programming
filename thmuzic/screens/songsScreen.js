@@ -24,8 +24,6 @@ import {
   Thumbnail
 } from "native-base";
 
-import MusicFiles from "react-native-get-music-files";
-
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android:
@@ -39,23 +37,6 @@ export default class songsScreen extends Component<{}> {
     this.state = {
       dataSource: this.data,
     };
-   MusicFiles.getAll({
-      blured : true, // works only when 'cover' is set to true
-      artist : true,
-      duration : true, //default : true
-      cover : false, //default : true,
-      genre : true,
-      title : true,
-      cover : true,
-      date : true,
-      lyrics : true,
-      comments : true,
-      minimumSongDuration : 10000 // get songs bigger than 10000 miliseconds duration,
-      //fields : ['title','albumTitle','genre','lyrics','artwork','duration'] // for iOs Version
-  }).then((datab)=>{
-    console.log(datab);
-    //this.setState({dataSource: ds.cloneWithRows(data)});
-  });;
    };
   render() {
     

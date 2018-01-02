@@ -10,7 +10,7 @@
     "native-base": "^2.3.5",
     "react": "16.0.0",
     "react-native": "^0.50.4",
-    "react-native-get-music-files": "^2.0.1"
+    "react-native-fs": "^2.9.6"
   },
   "devDependencies": {
     "babel-jest": "21.2.0",
