@@ -33,19 +33,12 @@ const instructions = Platform.select({
 });
 
 export default class playScreen extends Component<{}> {
+  static navigationOptions = {
+    title: 'Song Title',
+  };
   render() {
     return (
-      <Container style={{ backgroundColor: "#ffffff" }}>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Tên bài hát đang phát</Title>
-          </Body>
-        </Header>
+      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
         <Content>
           <Image
             style={{ width: 300, height: 300 }}

@@ -33,58 +33,59 @@ const instructions = Platform.select({
 });
 
 export default class songsScreen extends Component<{}> {
+  static navigationOptions = {
+    title: "All songs"
+  };
   constructor(props) {
     super(props);
-    
+
     var datab = [];
     this.state = {
-      dataSource: datab,
+      dataSource: datab
     };
-    var RNFS = require('react-native-fs');
+    var RNFS = require("react-native-fs");
     var dir = RNFS.ExternalStorageDirectoryPath + "/Music";
     console.log(dir);
     RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-    .then((result) => {
-      console.log('GOT RESULT', result);
-      for (index = 0; index < result.length; ++index) {
-        console.log('resultIndex',result[index]);
-        datab.push(result[index]);
-    }
-    this.setState({...this.state.dataSource,datab});
-    });
-   
-    console.log('datab',datab);
-    console.log('datasource',this.state.dataSource);
-   }
+      .then(result => {
+        console.log("GOT RESULT", result);
+        for (index = 0; index < result.length; ++index) {
+          console.log("resultIndex", result[index]);
+          datab.push(result[index]);
+        }
+        this.setState({ ...this.state.dataSource, datab });
+      });
+
+    console.log("datab", datab);
+    console.log("datasource", this.state.dataSource);
+  }
   render() {
-    
+    const { navigate } = this.props.navigation;
     return (
-      <Container style={{ backgroundColor: "#ffffff" }}>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Tất cả bài hát</Title>
-          </Body>
-        </Header>
+      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
         <Content>
-          <List dataArray={this.state.dataSource}
-            renderRow={(item) =>
-              <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
+          <List
+            dataArray={this.state.dataSource}
+            renderRow={item => (
+              <ListItem
+                style={{ borderBottomWidth: 0, backgroundColor: "#0xE9E9EF" }}
+                onPress={() => navigate("Play")}
+                title="All songs"
+              >
+                <Thumbnail
+                  square
+                  source={require("../images/icons/music.png")}
+                />
+                <Body>
                   <Text numberOfLines={2}>{item.name}</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note></Text>
-              </Right>
-            </ListItem>
-            }>
-          </List>
+                  <Text note />
+                </Body>
+                <Right>
+                  <Text note />
+                </Right>
+              </ListItem>
+            )}
+          />
         </Content>
       </Container>
     );

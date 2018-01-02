@@ -32,37 +32,29 @@ const instructions = Platform.select({
 });
 
 export default class artistScreen extends Component<{}> {
+  static navigationOptions = {
+    title: 'Artists',
+  };
   render() {
     return (
-      <Container style={{ backgroundColor: "#ffffff" }}>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Nghệ sĩ</Title>
-          </Body>
-          
-        </Header>
+      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
         <Content>
           <List>
-            <ListItem style={{borderBottomWidth: 0}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên ca sĩ</Text>
                   <Text note>1 Bài hát | 1 Album</Text>
               </Body>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên ca sĩ</Text>
                   <Text note>1 Bài hát | 1 Album</Text>
               </Body>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên ca sĩ</Text>

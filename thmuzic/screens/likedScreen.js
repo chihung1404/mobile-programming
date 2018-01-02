@@ -32,23 +32,15 @@ const instructions = Platform.select({
 });
 
 export default class likedScreen extends Component<{}> {
+  static navigationOptions = {
+    title: 'Favourites',
+  };
   render() {
     return (
-      <Container style={{ backgroundColor: "#ffffff" }}>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Bài hát yêu thích</Title>
-          </Body>
-          
-        </Header>
+      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
         <Content>
           <List>
-            <ListItem style={{borderBottomWidth: 0}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên bài hát</Text>
@@ -58,7 +50,7 @@ export default class likedScreen extends Component<{}> {
                 <Text note>3:43</Text>
               </Right>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên bài hát</Text>
@@ -68,7 +60,7 @@ export default class likedScreen extends Component<{}> {
                 <Text note>3:43</Text>
               </Right>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên bài hát</Text>

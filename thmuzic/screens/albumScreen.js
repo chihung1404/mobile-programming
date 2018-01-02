@@ -32,22 +32,15 @@ const instructions = Platform.select({
 });
 
 export default class albumScreen extends Component<{}> {
+  static navigationOptions = {
+    title: 'Albums',
+  };
   render() {
     return (
-      <Container style={{ backgroundColor: "#ffffff" }}>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Albums</Title>
-          </Body>
-        </Header>
+      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
         <Content>
           <List>
-            <ListItem style={{ borderBottomWidth: 0 }}>
+            <ListItem style={{ borderBottomWidth: 0 ,backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail
                 square
                 source={require("../images/icons/album.png")}
@@ -57,7 +50,7 @@ export default class albumScreen extends Component<{}> {
                 <Text note>Tên nghệ sĩ</Text>
               </Body>
             </ListItem>
-            <ListItem style={{ borderBottomWidth: 0 }}>
+            <ListItem style={{ borderBottomWidth: 0 ,backgroundColor: "#0xE9E9EF"}}>
               <Thumbnail
                 square
                 source={require("../images/icons/album.png")}
@@ -67,7 +60,7 @@ export default class albumScreen extends Component<{}> {
                 <Text note>Tên nghệ sĩ</Text>
               </Body>
             </ListItem>
-            <ListItem style={{ borderBottomWidth: 0 }}>
+            <ListItem style={{ borderBottomWidth: 0,backgroundColor: "#0xE9E9EF" }}>
               <Thumbnail
                 square
                 source={require("../images/icons/album.png")}
