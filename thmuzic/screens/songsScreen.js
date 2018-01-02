@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import {
   Platform,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ListView
   // Text,
   //View
 } from "react-native";
@@ -32,7 +33,31 @@ const instructions = Platform.select({
 });
 
 export default class songsScreen extends Component<{}> {
+  constructor(props) {
+    super(props);
+    
+    var datab = [];
+    this.state = {
+      dataSource: datab,
+    };
+    var RNFS = require('react-native-fs');
+    var dir = RNFS.ExternalStorageDirectoryPath + "/Music";
+    console.log(dir);
+    RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+    .then((result) => {
+      console.log('GOT RESULT', result);
+      for (index = 0; index < result.length; ++index) {
+        console.log('resultIndex',result[index]);
+        datab.push(result[index]);
+    }
+    this.setState({...this.state.dataSource,datab});
+    });
+   
+    console.log('datab',datab);
+    console.log('datasource',this.state.dataSource);
+   }
   render() {
+    
     return (
       <Container style={{ backgroundColor: "#ffffff" }}>
         <Header>
@@ -50,7 +75,7 @@ export default class songsScreen extends Component<{}> {
             <ListItem style={{borderBottomWidth: 0}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
+                  <Text numberOfLines={1}>{this.state.dataSource[0].name}</Text>
                   <Text note></Text>
               </Body>
               <Right>
