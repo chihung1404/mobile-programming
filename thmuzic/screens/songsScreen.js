@@ -71,47 +71,19 @@ export default class songsScreen extends Component<{}> {
           </Body>
         </Header>
         <Content>
-          <List>
-            <ListItem style={{borderBottomWidth: 0}}>
+          <List dataArray={this.state.dataSource}
+            renderRow={(item) =>
+              <ListItem style={{borderBottomWidth: 0}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
-                  <Text numberOfLines={1}>{this.state.dataSource[0].name}</Text>
+                  <Text numberOfLines={2}>{item.name}</Text>
                   <Text note></Text>
               </Body>
               <Right>
-                <Text note>3:43</Text>
+                <Text note></Text>
               </Right>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
+            }>
           </List>
         </Content>
       </Container>
