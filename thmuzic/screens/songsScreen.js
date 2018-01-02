@@ -32,7 +32,7 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-export default class songsScreen extends Component<{}> {
+class songsScreen extends Component<{}> {
   constructor(props) {
     super(props);
     
@@ -92,3 +92,4 @@ export default class songsScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({});
+export default songsScreen;

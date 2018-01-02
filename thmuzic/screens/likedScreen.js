@@ -31,7 +31,7 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-export default class likedScreen extends Component<{}> {
+class likedScreen extends Component<{}> {
   render() {
     return (
       <Container style={{ backgroundColor: "#ffffff" }}>
@@ -86,3 +86,4 @@ export default class likedScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({});
+export default likedScreen;
