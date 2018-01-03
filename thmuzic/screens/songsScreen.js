@@ -55,12 +55,9 @@ export default class songsScreen extends Component<{}> {
     RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
       .then((result) => {
         for (index = 0; index < result.length; ++index) {
-          console.log("resultIndex", result[index]);
           RNMusicMetadata.getMetadata([result[index].path])
           .then(tracks => {
-            console.log(tracks[0]);
             datab.push(tracks[0]);
-            console.log("datab", datab);
             this.setState({ ...this.state.dataSource, datab });
           })
           .catch(err => {
@@ -72,14 +69,14 @@ export default class songsScreen extends Component<{}> {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
+      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
         <Content>
           <List
             dataArray={this.state.dataSource}
             renderRow={item => (
               <ListItem
-                style={{ borderBottomWidth: 0, backgroundColor: "#0xE9E9EF" }}
-                onPress={() => navigate("Play",{songTitle: item.title})}
+                style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
+                onPress={() => navigate("Play",{songTitle: item.title, curentSong: item, listSong: this.state.dataSource})}
                 title="All songs"
               >
                 <Thumbnail
@@ -88,7 +85,7 @@ export default class songsScreen extends Component<{}> {
                 />
                 <Body>
                   <Text numberOfLines={2}>{item.title}</Text>
-                  <Text note />
+                  <Text note>{item.artist}</Text>
                 </Body>
                 <Right>
                   <Text note>{Math.round(item.duration/60 * 100) / 100}</Text>

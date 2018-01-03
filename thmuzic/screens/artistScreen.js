@@ -37,24 +37,24 @@ export default class artistScreen extends Component<{}> {
   };
   render() {
     return (
-      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
+      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
         <Content>
           <List>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên ca sĩ</Text>
                   <Text note>1 Bài hát | 1 Album</Text>
               </Body>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên ca sĩ</Text>
                   <Text note>1 Bài hát | 1 Album</Text>
               </Body>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail square source={require("../images/icons/artist.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên ca sĩ</Text>

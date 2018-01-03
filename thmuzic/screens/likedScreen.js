@@ -37,10 +37,10 @@ export default class likedScreen extends Component<{}> {
   };
   render() {
     return (
-      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
+      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
         <Content>
           <List>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên bài hát</Text>
@@ -50,7 +50,7 @@ export default class likedScreen extends Component<{}> {
                 <Text note>3:43</Text>
               </Right>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên bài hát</Text>
@@ -60,7 +60,7 @@ export default class likedScreen extends Component<{}> {
                 <Text note>3:43</Text>
               </Right>
             </ListItem>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
                   <Text numberOfLines={1}>Tên bài hát</Text>

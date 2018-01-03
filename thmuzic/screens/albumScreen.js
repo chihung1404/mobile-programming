@@ -37,10 +37,10 @@ export default class albumScreen extends Component<{}> {
   };
   render() {
     return (
-      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
+      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
         <Content>
           <List>
-            <ListItem style={{ borderBottomWidth: 0 ,backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{ borderBottomWidth: 0 ,backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail
                 square
                 source={require("../images/icons/album.png")}
@@ -50,7 +50,7 @@ export default class albumScreen extends Component<{}> {
                 <Text note>Tên nghệ sĩ</Text>
               </Body>
             </ListItem>
-            <ListItem style={{ borderBottomWidth: 0 ,backgroundColor: "#0xE9E9EF"}}>
+            <ListItem style={{ borderBottomWidth: 0 ,backgroundColor: "rgb(233, 233, 239)"}}>
               <Thumbnail
                 square
                 source={require("../images/icons/album.png")}
@@ -60,7 +60,7 @@ export default class albumScreen extends Component<{}> {
                 <Text note>Tên nghệ sĩ</Text>
               </Body>
             </ListItem>
-            <ListItem style={{ borderBottomWidth: 0,backgroundColor: "#0xE9E9EF" }}>
+            <ListItem style={{ borderBottomWidth: 0,backgroundColor: "rgb(233, 233, 239)" }}>
               <Thumbnail
                 square
                 source={require("../images/icons/album.png")}

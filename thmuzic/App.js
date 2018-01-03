@@ -44,54 +44,43 @@ class HomeScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
+      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
         <Content>
           <List>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "#0xE9E9EF" }}
+              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
+              onPress={() => navigate("Favou")}
             >
               <Thumbnail square source={require("./images/icons/like.png")} />
               <Body>
-                <Button transparent onPress={() => navigate("Favou")}
-                  title="All songs">
-                  <Text>Bài hát yêu thích</Text>
-                </Button>
+                  <Text>Favourite songs</Text>
               </Body>
             </ListItem>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "#0xE9E9EF" }}
+              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
+              onPress={() => navigate("Songs")}
             >
               <Thumbnail square source={require("./images/icons/music.png")} />
               <Body>
-                <Button
-                  transparent
-                  onPress={() => navigate("Songs")}
-                  title="All songs"
-                >
-                  <Text>Tất cả bài hát</Text>
-                </Button>
+                  <Text>All songs</Text>
               </Body>
             </ListItem>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "#0xE9E9EF" }}
+              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
+              onPress={() => navigate("Albums")}
             >
               <Thumbnail square source={require("./images/icons/album.png")} />
               <Body>
-                <Button transparent onPress={() => navigate("Albums")}
-                  title="All songs">
                   <Text>Albums</Text>
-                </Button>
               </Body>
             </ListItem>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "#0xE9E9EF" }}
+              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
+              onPress={() => navigate("Artists")}
             >
               <Thumbnail square source={require("./images/icons/artist.png")} />
               <Body>
-                <Button transparent onPress={() => navigate("Artists")}
-                  title="All songs">
-                  <Text>Nghệ sĩ</Text>
-                </Button>
+                  <Text>Artists</Text>
               </Body>
             </ListItem>
           </List>

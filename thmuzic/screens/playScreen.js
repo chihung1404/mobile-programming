@@ -25,6 +25,8 @@ import {
   Thumbnail
 } from "native-base";
 
+//import MusicControl from "react-native-music-control";
+
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android:
@@ -34,12 +36,26 @@ const instructions = Platform.select({
 
 export default class playScreen extends Component<{}> {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.songTitle}`,
+    title: `${navigation.state.params.curentSong.title}`,
   });
-  render() {
+  constructor(props) {
+    super(props);
+    var temp = [];
+    this.state = {
+      dataSource: temp
+    };
     const { params } = this.props.navigation.state;
+    params.listSong.forEach(function(item){
+      temp.push(item);
+    })
+    if (temp[0] != null) {
+      this.setState({ ...this.state.dataSource, temp });
+    }
+    var a = this.state.dataSource.indexOf(params.curentSong);
+  }
+  render() {
     return (
-      <Container style={{ backgroundColor: "#0xE9E9EF" }}>
+      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
         <Content>
           <Image
             style={{ width: 300, height: 300 }}
