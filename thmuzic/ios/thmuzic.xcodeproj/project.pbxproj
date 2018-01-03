@@ -50,6 +50,7 @@
 		A1E2953F0AC64054BC1549EB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 82D792FBCD3840DAA5254537 /* Zocial.ttf */; };
 		52A353FECF90412282B8453F /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD4E1D10A1D41C6B91A9976 /* libRNFS.a */; };
 		15639E8C5FD945A3B94EF2E3 /* libRNMusicMetadata.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBEF765543E540C79386897B /* libRNMusicMetadata.a */; };
+		8C2D81D8434E4E8FB0F82C7C /* libMusicControl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A544297FFDC74700BFA8AB22 /* libMusicControl.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +294,8 @@
 		7FD4E1D10A1D41C6B91A9976 /* libRNFS.a */ = {isa = PBXFileReference; name = "libRNFS.a"; path = "libRNFS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		05BAF92C1B224BC28A1FAEAC /* RNMusicMetadata.xcodeproj */ = {isa = PBXFileReference; name = "RNMusicMetadata.xcodeproj"; path = "../node_modules/react-native-music-metadata/RNMusicMetadata.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		DBEF765543E540C79386897B /* libRNMusicMetadata.a */ = {isa = PBXFileReference; name = "libRNMusicMetadata.a"; path = "libRNMusicMetadata.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		8576EEA8AC76429B95C798EE /* MusicControl.xcodeproj */ = {isa = PBXFileReference; name = "MusicControl.xcodeproj"; path = "../node_modules/react-native-music-control/ios/MusicControl.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A544297FFDC74700BFA8AB22 /* libMusicControl.a */ = {isa = PBXFileReference; name = "libMusicControl.a"; path = "libMusicControl.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +326,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				52A353FECF90412282B8453F /* libRNFS.a in Frameworks */,
 				15639E8C5FD945A3B94EF2E3 /* libRNMusicMetadata.a in Frameworks */,
+				8C2D81D8434E4E8FB0F82C7C /* libMusicControl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +497,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				3C4F3752D6074F35AB789B31 /* RNFS.xcodeproj */,
 				05BAF92C1B224BC28A1FAEAC /* RNMusicMetadata.xcodeproj */,
+				8576EEA8AC76429B95C798EE /* MusicControl.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1075,11 +1080,13 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
 				);
 			};
 			name = Debug;
@@ -1102,11 +1109,13 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
 				);
 			};
 			name = Release;
@@ -1130,6 +1139,7 @@
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
 				);
 			};
 			name = Debug;
@@ -1152,6 +1162,7 @@
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
 				);
 			};
 			name = Release;
@@ -1183,11 +1194,13 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
 				);
 			};
 			name = Debug;
@@ -1219,11 +1232,13 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-fs/**",
 					"$(SRCROOT)\..\node_modules\react-native-music-metadata\RNMusicMetadata",
+					"$(SRCROOT)\..\node_modules\react-native-music-control\ios",
 				);
 			};
 			name = Release;
@@ -1250,6 +1265,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1274,6 +1290,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);

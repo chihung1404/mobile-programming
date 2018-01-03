@@ -2,7 +2,7 @@ package com.thmuzic;
 
 import com.facebook.react.ReactActivity;
 import com.venepe.RNMusicMetadata.RNMusicMetadataPackage; // <------- add package
-
+import com.tanguyantoine.react.MusicControl;
 import com.rnfs.RNFSPackage; // <------- add package
 
 public class MainActivity extends ReactActivity {
