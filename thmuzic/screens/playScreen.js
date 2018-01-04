@@ -24,6 +24,7 @@ import {
   ListItem,
   Thumbnail
 } from "native-base";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 import MusicControl from "react-native-music-control";
 
@@ -54,48 +55,130 @@ export default class playScreen extends Component<{}> {
     var a = this.state.dataSource.indexOf(params.curentSong);
   }
   render() {
-    MusicControl.setNowPlaying({
-      title: "Billie Jean",
-      artwork: "https://i.imgur.com/e1cpwdo.png", // URL or RN's image require()
-      artist: "Michael Jackson",
-      album: "Thriller",
-      genre: "Post-disco, Rhythm and Blues, Funk, Dance-pop",
-      duration: 294, // (Seconds)
-      description: "", // Android Only
-      color: 0xffffff, // Notification Color - Android Only
-      date: "1983-01-02T00:00:00Z", // Release Date (RFC 3339) - Android Only
-      rating: 84, // Android Only (Boolean or Number depending on the type)
-      notificationIcon: "my_custom_icon" // Android Only (String), Android Drawable resource name for a custom notification icon
-    });
-    // Basic Controls
-    MusicControl.enableControl("play", true);
-    MusicControl.enableControl("pause", true);
-    MusicControl.enableControl("stop", true);
-    MusicControl.enableControl("nextTrack", true);
-    MusicControl.enableControl("previousTrack", true);
+    const { navigate } = this.props.navigation;
+    const { params } = this.props.navigation.state;
 
-    // Seeking
-    MusicControl.enableControl("seek", true); // Android only
-    MusicControl.enableControl("skipForward", true);
-    MusicControl.enableControl("skipBackward", true);
+    var Sound = require("react-native-sound");
+    console.log("new Soun");
+    console.log("uri", params.curentSong.uri);
 
-    // Android Specific Options
-    MusicControl.enableControl("setRating", false);
-    MusicControl.enableControl("volume", true); // Only affected when remoteVolume is enabled
-    MusicControl.enableControl("remoteVolume", true);
-
-    MusicControl.enableControl("closeNotification", true, { when: "never" });
+    setTimeout(() => {
+      var whoosh = new Sound(params.curentSong.uri, "", error => {
+        console.log("load Soun");
+        if (error) {
+          console.log("failed to load the sound", error);
+          return;
+        }
+        // loaded successfully
+        console.log(
+          "duration in seconds: " +
+            whoosh.getDuration() +
+            "number of channels: " +
+            whoosh.getNumberOfChannels()
+        );
+      });
+      setTimeout(() => {
+        //whoosh.play((success) => {
+        //  if (success) {
+        //    console.log('successfully finished playing');
+        //  } else {
+        //    console.log('playback failed due to audio decoding errors');
+        // reset the player to its uninitialized state (android only)
+        // this is the only option to recover after an error occured and use the player again
+        //whoosh.reset();
+        //   }
+        //});
+      }, 100);
+    }, 500);
     return (
       <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
-        <Content>
-          <Image
-            style={{ width: 300, height: 300 }}
-            source={require("../images/icons/play.png")}
-          />
-        </Content>
+        <Grid>
+          <Row size={4} style={{ backgroundColor: "#635DB7" }}>
+            <Col size={1} />
+            <Col
+              size={4}
+              style={styles.rowControl}
+            >
+              <Image
+                style={{ width: 350, height: 400 }}
+                source={require("../images/icons/test.jpg")}
+              />
+            </Col>
+            <Col size={1} />
+          </Row>
+          <Row
+            size={0.5}
+            style={styles.rowControl}
+          >
+            <Text>Progress Bar</Text>
+          </Row>
+
+          <Row size={1}>
+            <Col size={1} style={styles.rowControl}>
+              <TouchableOpacity onPress={() => navigate("Songs")}>
+                <Image
+                  style={styles.stretch}
+                  source={require("../images/icons/loop.png")}
+                />
+              </TouchableOpacity>
+            </Col>
+            <Col size={1} style={styles.rowControl}>
+              <TouchableOpacity onPress={() => navigate("Songs")}>
+                <Image
+                  style={styles.stretch}
+                  source={require("../images/icons/prev.png")}
+                />
+              </TouchableOpacity>
+            </Col>
+            <Col size={2} style={styles.rowControl}>
+              <TouchableOpacity onPress={() => navigate("Songs")}>
+                <Image
+                  style={{ width: 90, height: 90 }}
+                  source={require("../images/icons/play.png")}
+                />
+              </TouchableOpacity>
+            </Col>
+            <Col size={1} style={styles.rowControl}>
+              <TouchableOpacity onPress={() => navigate("Songs")}>
+                <Image
+                  style={styles.stretch}
+                  source={require("../images/icons/next.png")}
+                />
+              </TouchableOpacity>
+            </Col>
+            <Col size={1} style={styles.rowControl}>
+              <TouchableOpacity onPress={() => navigate("Songs")}>
+                <Image
+                  style={styles.stretch}
+                  source={require("../images/icons/shuffle.png")}
+                />
+              </TouchableOpacity>
+            </Col>
+          </Row>
+          <Row size={0.125} />
+        </Grid>
       </Container>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  contain: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  rowControl: {
+    alignItems: "center",
+    justifyContent: "center"
+    //backgroundColor: "#00CE"
+  },
+  playControl: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#00CE"
+  },
+  stretch: {
+    width: 50,
+    height: 50
+  }
+});
