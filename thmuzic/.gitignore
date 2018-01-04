@@ -30,6 +30,9 @@ build/
 local.properties
 *.iml
 
+# Node
+node_modules
+
 # node.js
 #
 npm-debug.log
