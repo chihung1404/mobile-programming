@@ -35,10 +35,6 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-function a(string){
-
-}
-
 export default class songsScreen extends Component<{}> {
   static navigationOptions = {
     title: "All songs"

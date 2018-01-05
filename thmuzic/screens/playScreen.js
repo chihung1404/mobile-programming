@@ -37,11 +37,9 @@ const instructions = Platform.select({
 var Sound = require("react-native-sound");
 export default class playScreen extends Component<{}> {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.curentSong.title}`
+    title: "Now Playing"
   });
-
   //--------------------------
-
   constructor(props) {
     super(props);
     var temp = [];
@@ -49,67 +47,102 @@ export default class playScreen extends Component<{}> {
       dataSource: temp,
       nativeSound: null,
       currentSong: null,
-      playing: true
+      playing: true,
+      currentfile: null,
+      songTitle: "",
+      loop: false,
+      shuffle: false
     };
     const { params } = this.props.navigation.state;
     params.listSong.forEach(function(item) {
       temp.push(item);
     });
+
     if (temp[0] != null) {
       this.setState({ ...this.state.dataSource, temp });
       setTimeout(() => {
         var whoosh = new Sound(params.curentSong.uri, "", error => {
-          console.log("load Soun");
           if (error) {
-            console.log("failed to load the sound", error);
             return;
           }
-          // loaded successfully
-          this.setState({currentSong: whoosh})
-          console.log('this.state.currentSong',this.state.currentSong)
-          console.log(
-            "duration in seconds: " +
-              whoosh.getDuration() +
-              "number of channels: " +
-              whoosh.getNumberOfChannels()
-          );
+          this.setState({
+            currentSong: whoosh,
+            currentfile: params.curentSong,
+            songTitle: params.curentSong.title
+            //loop: false,
+            //shuffle: false
+          });
+          console.log("this.state.currentfile", this.state.currentfile);
         });
         setTimeout(() => {
-          this.state.currentSong.play((success) => {
+          this.state.currentSong.play(success => {
             if (success) {
-              console.log('successfully finished playing');
+              //console.log('successfully finished playing');
             } else {
-              console.log('playback failed due to audio decoding errors');
-          // reset the player to its uninitialized state (android only)
-          // this is the only option to recover after an error occured and use the player again
-          this.state.currentSong.reset();
-             }
+              console.log("playback failed due to audio decoding errors");
+              // this is the only option to recover after an error occured and use the player again
+              this.state.currentSong.reset();
+            }
           });
+          //console.log('loops: ' + this.state.currentSong.getNumberOfLoops())
         }, 50);
       }, 250);
     }
-    var a = this.state.dataSource.indexOf(params.curentSong);
     this.startStopButton = this.startStopButton.bind(this);
     this.handleStartPress = this.handleStartPress.bind(this);
     this.setPlaying = this.setPlaying.bind(this);
+    this.playNext = this.playNext.bind(this);
+    this.playPrev = this.playPrev.bind(this);
+    this.loopOption = this.loopOption.bind(this);
+    this.shuffleOption = this.shuffleOption.bind(this);
   }
 
   //--------------------------
+  loopOption() {
+    if (this.state.loop) {
+      console.log("loop disable", this.state.currentSong.getNumberOfLoops());
+
+      this.setState({ loop: false });
+      this.state.currentSong.setNumberOfLoops(0);
+      console.log("loop disable", this.state.currentSong.getNumberOfLoops());
+    } else {
+      console.log("loop ok", this.state.currentSong.getNumberOfLoops());
+      console.log("loop", this.state.loop);
+      this.setState({ loop: true });
+      this.state.currentSong.setNumberOfLoops(-1);
+      console.log("loop ok", this.state.currentSong.getNumberOfLoops());
+      console.log("loop", this.state.loop);
+    }
+  }
+
+  shuffleOption() {
+    if (this.state.shuffle) {
+      console.log("shuffle disable", this.state.shuffle);
+      this.setState({ shuffle: false });
+      console.log("shuffle disable", this.state.shuffle);
+    } else {
+      console.log("shuffle ok", this.state.shuffle);
+      this.setState({ shuffle: true });
+      console.log("shuffle ok", this.state.shuffle);
+    }
+  }
+
   setPlaying() {
     if (this.state.playing) {
+      console.log("playing", this.state.playing);
       this.state.currentSong.pause();
       this.setState({ playing: false });
+
       return;
     } else {
-      this.state.currentSong.play((success) => {
+      console.log("playing", this.state.playing);
+      this.state.currentSong.play(success => {
         if (success) {
-          console.log('successfully finished playing');
+          //console.log('successfully finished playing');
         } else {
-          console.log('playback failed due to audio decoding errors');
-      // reset the player to its uninitialized state (android only)
-      // this is the only option to recover after an error occured and use the player again
-      this.state.currentSong.reset();
-         }
+          //console.log('playback failed due to audio decoding errors');
+          this.state.currentSong.reset();
+        }
       });
       this.setState({ playing: true });
     }
@@ -120,7 +153,7 @@ export default class playScreen extends Component<{}> {
       ? "data:../images/icons/pause.png"
       : "data:../images/icons/play.png";
     return (
-      <TouchableOpacity onPress={this.handleStartPress}>
+      <TouchableOpacity onPress={this.handleStartPress} activeOpacity={0.8}>
         <Image
           style={{ width: 90, height: 90 }}
           source={
@@ -132,16 +165,197 @@ export default class playScreen extends Component<{}> {
       </TouchableOpacity>
     );
   }
+
   handleStartPress() {
     this.setPlaying();
   }
+
+  playNext() {
+    var index = this.state.dataSource.indexOf(this.state.currentfile);
+    console.log("index", index);
+    console.log("this.state.dataSource", this.state.dataSource);
+    console.log("this.state.currentSong", this.state.currentSong);
+    if (!this.state.playing) {
+      this.setState({ playing: true });
+    }
+    switch (this.state.shuffle) {
+      case true:
+        var nextIndex = 1;
+        if (index < this.state.dataSource.length / 2) {
+          nextIndex = Math.floor(
+            (Math.random() * (this.state.dataSource.length - 1)) + (index + 1)
+          );
+        } else {
+          nextIndex = Math.floor((Math.random() * (index - 1)) + 0);
+        }
+        this.state.currentSong.stop();
+        this.state.currentSong.release();
+        setTimeout(() => {
+          var whoosh = new Sound(
+            this.state.dataSource[nextIndex].uri,
+            "",
+            error => {
+              if (error) {
+                return;
+              }
+              this.setState({
+                currentSong: whoosh,
+                currentfile: this.state.dataSource[nextIndex],
+                songTitle: this.state.dataSource[nextIndex].title
+              });
+
+              console.log("this.state.currentfile", this.state.currentfile);
+            }
+          );
+          setTimeout(() => {
+            this.state.currentSong.play(success => {
+              if (success) {
+                //console.log('successfully finished playing');
+              } else {
+                console.log("playback failed due to audio decoding errors");
+                // this is the only option to recover after an error occured and use the player again
+                this.state.currentSong.reset();
+              }
+            });
+          }, 50);
+        }, 250);
+        break;
+      case false:
+        if (index === this.state.dataSource.length - 1) {
+          this.state.currentSong.stop(() => {
+            this.state.currentSong.play();
+          });
+        } else {
+          this.state.currentSong.stop();
+          this.state.currentSong.release();
+          setTimeout(() => {
+            var whoosh = new Sound(
+              this.state.dataSource[index + 1].uri,
+              "",
+              error => {
+                if (error) {
+                  return;
+                }
+                this.setState({
+                  currentSong: whoosh,
+                  currentfile: this.state.dataSource[index + 1],
+                  songTitle: this.state.dataSource[index + 1].title
+                });
+
+                console.log("this.state.currentfile", this.state.currentfile);
+              }
+            );
+            setTimeout(() => {
+              this.state.currentSong.play(success => {
+                if (success) {
+                  //console.log('successfully finished playing');
+                } else {
+                  console.log("playback failed due to audio decoding errors");
+                  // this is the only option to recover after an error occured and use the player again
+                  this.state.currentSong.reset();
+                }
+              });
+            }, 50);
+          }, 250);
+        }
+    }
+  }
+
+  playPrev() {
+    var index = this.state.dataSource.indexOf(this.state.currentfile);
+    console.log("index", index);
+    console.log("this.state.dataSource", this.state.dataSource);
+    console.log("this.state.currentSong", this.state.currentSong);
+    if (!this.state.playing) {
+      this.setState({ playing: true });
+    }
+    switch (this.state.shuffle) {
+      case true:
+        var nextIndex = 1;
+        if (index < this.state.dataSource.length / 2) {
+          nextIndex = Math.floor(
+            (Math.random() * (this.state.dataSource.length - 1)) + (index + 1)
+          );
+        } else {
+          nextIndex = Math.floor((Math.random() * (index - 1)) + 0);
+        }
+        this.state.currentSong.stop();
+        this.state.currentSong.release();
+        setTimeout(() => {
+          var whoosh = new Sound(
+            this.state.dataSource[nextIndex].uri,
+            "",
+            error => {
+              if (error) {
+                return;
+              }
+              this.setState({
+                currentSong: whoosh,
+                currentfile: this.state.dataSource[nextIndex],
+                songTitle: this.state.dataSource[nextIndex].title
+              });
+
+              console.log("this.state.currentfile", this.state.currentfile);
+            }
+          );
+          setTimeout(() => {
+            this.state.currentSong.play(success => {
+              if (success) {
+                //console.log('successfully finished playing');
+              } else {
+                console.log("playback failed due to audio decoding errors");
+                // this is the only option to recover after an error occured and use the player again
+                this.state.currentSong.reset();
+              }
+            });
+          }, 50);
+        }, 250);
+        break;
+        break;
+      case false:
+        if (index === 0) {
+          this.state.currentSong.stop(() => {
+            this.state.currentSong.play();
+          });
+        } else {
+          this.state.currentSong.stop();
+          this.state.currentSong.release();
+          setTimeout(() => {
+            var whoosh = new Sound(
+              this.state.dataSource[index - 1].uri,
+              "",
+              error => {
+                if (error) {
+                  return;
+                }
+                this.setState({
+                  currentSong: whoosh,
+                  currentfile: this.state.dataSource[index - 1],
+                  songTitle: this.state.dataSource[index - 1].title
+                });
+                console.log("this.state.currentfile", this.state.currentfile);
+              }
+            );
+            setTimeout(() => {
+              this.state.currentSong.play(success => {
+                if (success) {
+                  //console.log('successfully finished playing');
+                } else {
+                  console.log("playback failed due to audio decoding errors");
+                  // this is the only option to recover after an error occured and use the player again
+                  this.state.currentSong.reset();
+                }
+              });
+            }, 50);
+          }, 250);
+        }
+    }
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
-
-    console.log("new Sound");
-    console.log("uri", params.curentSong.uri);
-
+    //const tit = this.state.currentfile.title;
     return (
       <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
         <Grid>
@@ -156,12 +370,12 @@ export default class playScreen extends Component<{}> {
             <Col size={1} />
           </Row>
           <Row size={0.5} style={styles.rowControl}>
-            <Text>Progress Bar</Text>
+            <Text>{this.state.songTitle}</Text>
           </Row>
 
           <Row size={1}>
             <Col size={1} style={styles.rowControl}>
-              <TouchableOpacity onPress={() => navigate("Songs")}>
+              <TouchableOpacity onPress={this.loopOption}>
                 <Image
                   style={styles.stretch}
                   source={require("../images/icons/loop.png")}
@@ -169,7 +383,7 @@ export default class playScreen extends Component<{}> {
               </TouchableOpacity>
             </Col>
             <Col size={1} style={styles.rowControl}>
-              <TouchableOpacity onPress={() => navigate("Songs")}>
+              <TouchableOpacity onPress={this.playPrev}>
                 <Image
                   style={styles.stretch}
                   source={require("../images/icons/prev.png")}
@@ -180,7 +394,7 @@ export default class playScreen extends Component<{}> {
               {this.startStopButton()}
             </Col>
             <Col size={1} style={styles.rowControl}>
-              <TouchableOpacity onPress={() => navigate("Songs")}>
+              <TouchableOpacity onPress={this.playNext}>
                 <Image
                   style={styles.stretch}
                   source={require("../images/icons/next.png")}
@@ -188,7 +402,7 @@ export default class playScreen extends Component<{}> {
               </TouchableOpacity>
             </Col>
             <Col size={1} style={styles.rowControl}>
-              <TouchableOpacity onPress={() => navigate("Songs")}>
+              <TouchableOpacity onPress={this.shuffleOption}>
                 <Image
                   style={styles.stretch}
                   source={require("../images/icons/shuffle.png")}
