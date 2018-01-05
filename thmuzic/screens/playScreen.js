@@ -37,8 +37,21 @@ const instructions = Platform.select({
 var Sound = require("react-native-sound");
 export default class playScreen extends Component<{}> {
   static navigationOptions = ({ navigation }) => ({
-    title: "Now Playing"
+    header: (
+      <Header style={{ backgroundColor: "rgb(17, 17, 17)" }}>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title />
+        </Body>
+        <Right />
+      </Header>
+    )
   });
+
   //--------------------------
   constructor(props) {
     super(props);
@@ -50,6 +63,7 @@ export default class playScreen extends Component<{}> {
       playing: true,
       currentfile: null,
       songTitle: "",
+      artist: "",
       loop: false,
       shuffle: false
     };
@@ -68,23 +82,19 @@ export default class playScreen extends Component<{}> {
           this.setState({
             currentSong: whoosh,
             currentfile: params.curentSong,
-            songTitle: params.curentSong.title
-            //loop: false,
-            //shuffle: false
+            songTitle: params.curentSong.title,
+            artist: params.curentSong.artist
           });
           console.log("this.state.currentfile", this.state.currentfile);
         });
         setTimeout(() => {
           this.state.currentSong.play(success => {
             if (success) {
-              //console.log('successfully finished playing');
             } else {
               console.log("playback failed due to audio decoding errors");
-              // this is the only option to recover after an error occured and use the player again
               this.state.currentSong.reset();
             }
           });
-          //console.log('loops: ' + this.state.currentSong.getNumberOfLoops())
         }, 50);
       }, 250);
     }
@@ -95,6 +105,8 @@ export default class playScreen extends Component<{}> {
     this.playPrev = this.playPrev.bind(this);
     this.loopOption = this.loopOption.bind(this);
     this.shuffleOption = this.shuffleOption.bind(this);
+    this.loopButton = this.loopButton.bind(this);
+    this.shuffleButton = this.shuffleButton.bind(this);
   }
 
   //--------------------------
@@ -129,16 +141,14 @@ export default class playScreen extends Component<{}> {
 
   setPlaying() {
     if (this.state.playing) {
-      console.log("playing", this.state.playing);
       this.state.currentSong.pause();
       this.setState({ playing: false });
-
       return;
     } else {
-      console.log("playing", this.state.playing);
       this.state.currentSong.play(success => {
         if (success) {
           //console.log('successfully finished playing');
+          //const tit = this.state.currentfile.title;
         } else {
           //console.log('playback failed due to audio decoding errors');
           this.state.currentSong.reset();
@@ -166,6 +176,34 @@ export default class playScreen extends Component<{}> {
     );
   }
 
+  loopButton() {
+    return (
+      <TouchableOpacity onPress={this.loopOption} activeOpacity={0.8}>
+        <Image
+          style={styles.stretch}
+          source={
+            this.state.loop
+              ? require("../images/icons/loop-enable.png")
+              : require("../images/icons/loop.png")
+          }
+        />
+      </TouchableOpacity>
+    );
+  }
+  shuffleButton() {
+    return (
+      <TouchableOpacity onPress={this.shuffleOption} activeOpacity={0.8}>
+        <Image
+          style={styles.stretch}
+          source={
+            this.state.shuffle
+              ? require("../images/icons/shuffle-enable.png")
+              : require("../images/icons/shuffle.png")
+          }
+        />
+      </TouchableOpacity>
+    );
+  }
   handleStartPress() {
     this.setPlaying();
   }
@@ -183,10 +221,10 @@ export default class playScreen extends Component<{}> {
         var nextIndex = 1;
         if (index < this.state.dataSource.length / 2) {
           nextIndex = Math.floor(
-            (Math.random() * (this.state.dataSource.length - 1)) + (index + 1)
+            Math.random() * (this.state.dataSource.length - 1) + (index + 1)
           );
         } else {
-          nextIndex = Math.floor((Math.random() * (index - 1)) + 0);
+          nextIndex = Math.floor(Math.random() * (index - 1) + 0);
         }
         this.state.currentSong.stop();
         this.state.currentSong.release();
@@ -201,7 +239,8 @@ export default class playScreen extends Component<{}> {
               this.setState({
                 currentSong: whoosh,
                 currentfile: this.state.dataSource[nextIndex],
-                songTitle: this.state.dataSource[nextIndex].title
+                songTitle: this.state.dataSource[nextIndex].title,
+                artist: this.state.dataSource[nextIndex].artist
               });
 
               console.log("this.state.currentfile", this.state.currentfile);
@@ -239,7 +278,8 @@ export default class playScreen extends Component<{}> {
                 this.setState({
                   currentSong: whoosh,
                   currentfile: this.state.dataSource[index + 1],
-                  songTitle: this.state.dataSource[index + 1].title
+                  songTitle: this.state.dataSource[index + 1].title,
+                  artist: this.state.dataSource[index + 1].artist
                 });
 
                 console.log("this.state.currentfile", this.state.currentfile);
@@ -274,10 +314,10 @@ export default class playScreen extends Component<{}> {
         var nextIndex = 1;
         if (index < this.state.dataSource.length / 2) {
           nextIndex = Math.floor(
-            (Math.random() * (this.state.dataSource.length - 1)) + (index + 1)
+            Math.random() * (this.state.dataSource.length - 1) + (index + 1)
           );
         } else {
-          nextIndex = Math.floor((Math.random() * (index - 1)) + 0);
+          nextIndex = Math.floor(Math.random() * (index - 1) + 0);
         }
         this.state.currentSong.stop();
         this.state.currentSong.release();
@@ -292,7 +332,8 @@ export default class playScreen extends Component<{}> {
               this.setState({
                 currentSong: whoosh,
                 currentfile: this.state.dataSource[nextIndex],
-                songTitle: this.state.dataSource[nextIndex].title
+                songTitle: this.state.dataSource[nextIndex].title,
+                artist: this.state.dataSource[nextIndex].artist
               });
 
               console.log("this.state.currentfile", this.state.currentfile);
@@ -331,7 +372,8 @@ export default class playScreen extends Component<{}> {
                 this.setState({
                   currentSong: whoosh,
                   currentfile: this.state.dataSource[index - 1],
-                  songTitle: this.state.dataSource[index - 1].title
+                  songTitle: this.state.dataSource[index - 1].title,
+                  artist: this.state.dataSource[index - 1].artist
                 });
                 console.log("this.state.currentfile", this.state.currentfile);
               }
@@ -351,36 +393,78 @@ export default class playScreen extends Component<{}> {
         }
     }
   }
+  componentWillMount() {
+    //MusicControl.setNowPlaying({
+    //  title: "Billie Jean",
+    //  artwork: "https://i.imgur.com/e1cpwdo.png", // URL or RN's image require()
+    //  artist: "Michael Jackson",
+    //  album: "Thriller",
+     // genre: "Post-disco, Rhythm and Blues, Funk, Dance-pop",
+    //  duration: 294, // (Seconds)
+    //  description: "", // Android Only
+    //  color: 0xffffff, // Notification Color - Android Only
+    //  date: "1983-01-02T00:00:00Z", // Release Date (RFC 3339) - Android Only
+    //  rating: 84, // Android Only (Boolean or Number depending on the type)
+    //  notificationIcon: "my_custom_icon" // Android Only (String), Android Drawable resource name for a custom notification icon
+    //});
+    // Basic Controls
+    MusicControl.enableControl("play", true);
+    MusicControl.enableControl("pause", true);
+    MusicControl.enableControl("stop", false);
+    MusicControl.enableControl("nextTrack", true);
+    MusicControl.enableControl("previousTrack", true);
+
+    // Seeking
+    MusicControl.enableControl("seek", true); // Android only
+    MusicControl.enableControl("skipForward", true);
+    MusicControl.enableControl("skipBackward", true);
+
+    // Android Specific Options
+    MusicControl.enableControl("setRating", false);
+    MusicControl.enableControl("volume", true); // Only affected when remoteVolume is enabled
+    MusicControl.enableControl("remoteVolume", true);
+
+    MusicControl.enableControl("closeNotification", true, { when: "always" });
+    MusicControl.updatePlayback({
+      state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+      speed: 1, // Playback Rate
+      elapsedTime: 103, // (Seconds)
+      bufferedTime: 200, // Android Only (Seconds)
+      volume: 10, // Android Only (Number from 0 to maxVolume) - Only used when remoteVolume is enabled
+      maxVolume: 10, // Android Only (Number) - Only used when remoteVolume is enabled
+      rating: MusicControl.RATING_PERCENTAGE // Android Only (RATING_HEART, RATING_THUMBS_UP_DOWN, RATING_3_STARS, RATING_4_STARS, RATING_5_STARS, RATING_PERCENTAGE)
+    });
+  }
 
   render() {
     const { navigate } = this.props.navigation;
     const { params } = this.props.navigation.state;
-    //const tit = this.state.currentfile.title;
+
+    {
+      this.startStopButton();
+    }
     return (
-      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
+      <Container style={{ backgroundColor: "rgb(17, 17, 17)" }}>
         <Grid>
-          <Row size={4} style={{ backgroundColor: "#635DB7" }}>
+          <Row size={3} style={{ backgroundColor: "rgb(17, 17, 17)" }}>
             <Col size={1} />
             <Col size={4} style={styles.rowControl}>
               <Image
                 style={{ width: 350, height: 400 }}
-                source={require("../images/icons/test.jpg")}
+                source={require("../images/icons/cool.jpg")}
               />
             </Col>
             <Col size={1} />
           </Row>
           <Row size={0.5} style={styles.rowControl}>
-            <Text>{this.state.songTitle}</Text>
+            <Text style={styles.white}>{this.state.songTitle}</Text>
           </Row>
-
-          <Row size={1}>
+          <Row size={0.25} style={styles.rowControl}>
+            <Text style={styles.gray}>{this.state.artist}</Text>
+          </Row>
+          <Row size={1.5}>
             <Col size={1} style={styles.rowControl}>
-              <TouchableOpacity onPress={this.loopOption}>
-                <Image
-                  style={styles.stretch}
-                  source={require("../images/icons/loop.png")}
-                />
-              </TouchableOpacity>
+              {this.loopButton()}
             </Col>
             <Col size={1} style={styles.rowControl}>
               <TouchableOpacity onPress={this.playPrev}>
@@ -402,18 +486,59 @@ export default class playScreen extends Component<{}> {
               </TouchableOpacity>
             </Col>
             <Col size={1} style={styles.rowControl}>
-              <TouchableOpacity onPress={this.shuffleOption}>
-                <Image
-                  style={styles.stretch}
-                  source={require("../images/icons/shuffle.png")}
-                />
-              </TouchableOpacity>
+              {this.shuffleButton()}
             </Col>
           </Row>
           <Row size={0.125} />
         </Grid>
       </Container>
     );
+  }
+
+  componentDidMount() {
+    MusicControl.enableBackgroundMode(true);
+
+    // on iOS, pause playback during audio interruptions (incoming calls) and resume afterwards.
+    MusicControl.handleAudioInterruptions(true);
+
+    MusicControl.on("play", () => {
+      this.setPlaying();
+    });
+
+    // on iOS this event will also be triggered by audio router change events
+    // happening when headphones are unplugged or a bluetooth audio peripheral disconnects from the device
+    MusicControl.on("pause", () => {
+      this.setPlaying();
+    });
+
+    MusicControl.on("stop", () => {
+      this.props.dispatch(stopRemoteControl());
+    });
+
+    MusicControl.on("nextTrack", () => {
+      this.playNext();
+    });
+
+    MusicControl.on("previousTrack", () => {
+      this.playPrev();
+    });
+
+    MusicControl.on("seekForward", () => {});
+    MusicControl.on("seekBackward", () => {});
+
+    MusicControl.on("seek", pos => {}); // Android only (Seconds)
+    MusicControl.on("volume", volume => {}); // Android only (0 to maxVolume) - Only fired when remoteVolume is enabled
+
+    // Android Only (Boolean for RATING_HEART or RATING_THUMBS_UP_DOWN, Number for other types)
+    MusicControl.on("setRating", rating => {});
+
+    MusicControl.on("skipForward", () => {});
+    MusicControl.on("skipBackward", () => {});
+
+    // Android Only
+    MusicControl.on("closeNotification", () => {
+      this.setPlaying();
+    });
   }
 }
 
@@ -430,10 +555,17 @@ const styles = StyleSheet.create({
   playControl: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#00CE"
+    backgroundColor: "#rgb(17, 17, 17)"
   },
   stretch: {
     width: 50,
     height: 50
+  },
+  white: {
+    color: "white",
+    fontSize: 22
+  },
+  gray: {
+    color: "rgb(136, 136, 136)"
   }
 });

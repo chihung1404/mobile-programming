@@ -32,42 +32,39 @@ const instructions = Platform.select({
 });
 
 export default class likedScreen extends Component<{}> {
-  static navigationOptions = {
-    title: 'Favourites',
-  };
+  static navigationOptions = ({ navigation }) => ({
+    header: (
+      <Header style={{ backgroundColor: "rgb(28, 28, 28)" }}>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Favourites</Title>
+        </Body>
+        <Right />
+      </Header>
+    )
+  });
   render() {
     return (
-      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
+      <Container style={{ backgroundColor: "rgb(17, 17, 17)" }}>
         <Content>
           <List>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
+            <ListItem
+              style={{
+                borderBottomWidth: 0,
+                backgroundColor: "rgb(17, 17, 17)"
+              }}
+            >
               <Thumbnail square source={require("../images/icons/music.png")} />
               <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
+                <Text numberOfLines={1} style ={styles.white}>Tên bài hát</Text>
+                <Text note style ={styles.white}/>
               </Body>
               <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={{borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)"}}>
-              <Thumbnail square source={require("../images/icons/music.png")} />
-              <Body>
-                  <Text numberOfLines={1}>Tên bài hát</Text>
-                  <Text note></Text>
-              </Body>
-              <Right>
-                <Text note>3:43</Text>
+                <Text note style ={styles.gray}>3:43</Text>
               </Right>
             </ListItem>
           </List>
@@ -77,4 +74,12 @@ export default class likedScreen extends Component<{}> {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  white: {
+    color: "white",
+    fontSize: 18
+  },
+  gray: {
+    color: "rgb(136, 136, 136)"
+  }
+});

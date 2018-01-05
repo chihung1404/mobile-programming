@@ -32,16 +32,28 @@ const instructions = Platform.select({
 });
 import RNMusicMetadata from "react-native-music-metadata";
 export default class albumScreen extends Component<{}> {
-  static navigationOptions = {
-    title: "Albums"
-  };
+  static navigationOptions = ({ navigation }) => ({
+    header: (
+      <Header style={{ backgroundColor: "rgb(28, 28, 28)" }}>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Albums</Title>
+        </Body>
+        <Right />
+      </Header>
+    )
+  });
 
   constructor(props) {
     super(props);
     var listAlbum = [];
     var data = [];
     this.state = {
-      dataSource: listAlbum,
+      dataSource: listAlbum
     };
     const { params } = this.props.navigation.state;
     params.listSong.forEach(function(item) {
@@ -57,13 +69,13 @@ export default class albumScreen extends Component<{}> {
       }
     } while (data.length > 0);
     this.setState({ ...this.state.dataSource, listAlbum });
-    console.log('this.state.dataSource',this.state.dataSource)
+    console.log("this.state.dataSource", this.state.dataSource);
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
+      <Container style={{ backgroundColor: "rgb(17, 17, 17)" }}>
         <Content>
           <List
             dataArray={this.state.dataSource}
@@ -71,7 +83,7 @@ export default class albumScreen extends Component<{}> {
               <ListItem
                 style={{
                   borderBottomWidth: 0,
-                  backgroundColor: "rgb(233, 233, 239)"
+                  backgroundColor: "rgb(17, 17, 17)"
                 }}
                 onPress={() =>
                   navigate("Songs", {
@@ -85,13 +97,13 @@ export default class albumScreen extends Component<{}> {
                   source={require("../images/icons/album.png")}
                 />
                 <Body>
-                  <Text numberOfLines={2}>{item[0].albumName}</Text>
-                  <Text note numberOfLines={1}>
+                  <Text numberOfLines={2} style ={styles.white}>{item[0].albumName}</Text>
+                  <Text note numberOfLines={1} style ={styles.white}>
                     {item[0].albumArtist}
                   </Text>
                 </Body>
                 <Right>
-                  <Text note>{item.length} songs</Text>
+                  <Text note style ={styles.gray}>{item.length} songs</Text>
                 </Right>
               </ListItem>
             )}
@@ -102,4 +114,12 @@ export default class albumScreen extends Component<{}> {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  white: {
+    color: "white",
+    fontSize: 18
+  },
+  gray: {
+    color: "rgb(136, 136, 136)"
+  }
+});

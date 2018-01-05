@@ -36,10 +36,21 @@ const instructions = Platform.select({
 });
 
 export default class songsScreen extends Component<{}> {
-  static navigationOptions = {
-    title: "All songs"
-  };
-
+  static navigationOptions = ({ navigation }) => ({
+    header: (
+      <Header style={{ backgroundColor: "rgb(28, 28, 28)" }}>
+        <Left>
+          <Button transparent onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>All songs</Title>
+        </Body>
+        <Right />
+      </Header>
+    )
+  });
   constructor(props) {
     super(props);
     var data = [];
@@ -48,35 +59,20 @@ export default class songsScreen extends Component<{}> {
     };
     const { params } = this.props.navigation.state;
     params.listSong.forEach(function(item) {
-     //console.log('data',item);
-     data.push(item);
+      //console.log('data',item);
+      data.push(item);
     });
     this.setState({ ...this.state.dataSource, data });
     //console.log('datasource',this.state.dataSource);
-    data.forEach(function(item) {
-      console.log('data',item);
-      //data.push(item);
-    });
-    //var RNFS = require("react-native-fs");
-    //var dir = RNFS.ExternalStorageDirectoryPath + "/Music";
-    //RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-    //  .then(result => {
-    //    for (index = 0; index < result.length; ++index) {
-    //      RNMusicMetadata.getMetadata([result[index].path])
-    //        .then(tracks => {
-    //          datab.push(tracks[0]);
-    //          this.setState({ ...this.state.dataSource, datab });
-    //        })
-    //        .catch(err => {
-    //          console.error(err);
-    //        });
-    //    }
-    //  });
+    //data.forEach(function(item) {
+    //  console.log('data',item);
+    //data.push(item);
+    //});
   }
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
+      <Container style={{ backgroundColor: "rgb(17, 17, 17)" }}>
         <Content>
           <List
             dataArray={this.state.dataSource}
@@ -84,7 +80,7 @@ export default class songsScreen extends Component<{}> {
               <ListItem
                 style={{
                   borderBottomWidth: 0,
-                  backgroundColor: "rgb(233, 233, 239)"
+                  backgroundColor: "rgb(17, 17, 17)"
                 }}
                 onPress={() =>
                   navigate("Play", {
@@ -99,11 +95,15 @@ export default class songsScreen extends Component<{}> {
                   source={require("../images/icons/music.png")}
                 />
                 <Body>
-                  <Text numberOfLines={2}>{item.title}</Text>
+                  <Text numberOfLines={2} style={styles.white}>
+                    {item.title}
+                  </Text>
                   <Text note>{item.artist}</Text>
                 </Body>
                 <Right>
-                  <Text note>{Math.round(item.duration / 60 * 100) / 100}</Text>
+                  <Text note style={styles.gray}>
+                    {Math.round(item.duration / 60 * 100) / 100}
+                  </Text>
                 </Right>
               </ListItem>
             )}
@@ -114,4 +114,12 @@ export default class songsScreen extends Component<{}> {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  white: {
+    color: "white",
+    fontSize: 18
+  },
+  gray: {
+    color: "rgb(136, 136, 136)"
+  }
+});

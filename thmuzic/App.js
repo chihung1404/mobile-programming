@@ -40,7 +40,19 @@ import RNMusicMetadata from "react-native-music-metadata";
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: "TH muzik"
+    header: (
+      <Header style={{ backgroundColor: "rgb(28, 28, 28)" }}>
+        <Left >
+        <Button transparent>
+              <Icon name='menu' />
+            </Button>
+        </Left>
+        <Body >
+          <Title>THmuzik</Title>
+        </Body>
+        <Right />
+      </Header>
+    )
   };
   constructor(props) {
     super(props);
@@ -67,25 +79,25 @@ class HomeScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <Container style={{ backgroundColor: "rgb(233, 233, 239)" }}>
+      <Container style={{ backgroundColor: "rgb(17, 17, 17)" }}>
         <Content>
           <List>
             <ListItem
               style={{
                 borderBottomWidth: 0,
-                backgroundColor: "rgb(233, 233, 239)"
+                backgroundColor: "rgb(17, 17, 17)"
               }}
               onPress={() => navigate("Favou")}
             >
               <Thumbnail square source={require("./images/icons/like.png")} />
               <Body>
-                <Text>Favourite songs</Text>
+                <Text style={styles.white}>Favourite songs</Text>
               </Body>
             </ListItem>
             <ListItem
               style={{
                 borderBottomWidth: 0,
-                backgroundColor: "rgb(233, 233, 239)"
+                backgroundColor: "rgb(17, 17, 17)"
               }}
               onPress={() => navigate("Songs", {
                 listSong: this.state.dataSource
@@ -93,13 +105,13 @@ class HomeScreen extends React.Component {
             >
               <Thumbnail square source={require("./images/icons/music.png")} />
               <Body>
-                <Text>All songs</Text>
+                <Text style={styles.white}>All songs</Text>
               </Body>
             </ListItem>
             <ListItem
               style={{
                 borderBottomWidth: 0,
-                backgroundColor: "rgb(233, 233, 239)"
+                backgroundColor: "rgb(17, 17, 17)"
               }}
               onPress={() =>
                 navigate("Albums", {
@@ -109,13 +121,13 @@ class HomeScreen extends React.Component {
             >
               <Thumbnail square source={require("./images/icons/album.png")} />
               <Body>
-                <Text>Albums</Text>
+                <Text style={styles.white}>Albums</Text>
               </Body>
             </ListItem>
             <ListItem
               style={{
                 borderBottomWidth: 0,
-                backgroundColor: "rgb(233, 233, 239)"
+                backgroundColor: "rgb(17, 17, 17)"
               }}
               onPress={() => navigate("Artists", {
                 listSong: this.state.dataSource
@@ -123,7 +135,7 @@ class HomeScreen extends React.Component {
             >
               <Thumbnail square source={require("./images/icons/artist.png")} />
               <Body>
-                <Text>Artists</Text>
+                <Text style={styles.white}>Artists</Text>
               </Body>
             </ListItem>
           </List>
@@ -148,4 +160,8 @@ export default class App extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  white: {
+    color: 'white',
+  },
+});
