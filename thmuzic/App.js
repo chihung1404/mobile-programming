@@ -31,16 +31,39 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-import songsScreen from './screens/songsScreen.js';
-import albumScreen from './screens/albumScreen.js';
-import artistScreen from './screens/artistScreen.js';
-import likedScreen from './screens/likedScreen.js';
-import playScreen from './screens/playScreen.js';
+import songsScreen from "./screens/songsScreen.js";
+import albumScreen from "./screens/albumScreen.js";
+import artistScreen from "./screens/artistScreen.js";
+import likedScreen from "./screens/likedScreen.js";
+import playScreen from "./screens/playScreen.js";
+import RNMusicMetadata from "react-native-music-metadata";
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: "TH muzik"
   };
+  constructor(props) {
+    super(props);
+    var data = [];
+    this.state = {
+      dataSource: data
+    };
+    var RNFS = require("react-native-fs");
+    var dir = RNFS.ExternalStorageDirectoryPath + "/Music";
+    RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+      .then(result => {
+        for (index = 0; index < result.length; ++index) {
+          RNMusicMetadata.getMetadata([result[index].path])
+            .then(tracks => {
+              data.push(tracks[0]);
+              this.setState({ ...this.state.dataSource, data });
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        }
+      });
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -48,39 +71,59 @@ class HomeScreen extends React.Component {
         <Content>
           <List>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
+              style={{
+                borderBottomWidth: 0,
+                backgroundColor: "rgb(233, 233, 239)"
+              }}
               onPress={() => navigate("Favou")}
             >
               <Thumbnail square source={require("./images/icons/like.png")} />
               <Body>
-                  <Text>Favourite songs</Text>
+                <Text>Favourite songs</Text>
               </Body>
             </ListItem>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
-              onPress={() => navigate("Songs")}
+              style={{
+                borderBottomWidth: 0,
+                backgroundColor: "rgb(233, 233, 239)"
+              }}
+              onPress={() => navigate("Songs", {
+                listSong: this.state.dataSource
+              })}
             >
               <Thumbnail square source={require("./images/icons/music.png")} />
               <Body>
-                  <Text>All songs</Text>
+                <Text>All songs</Text>
               </Body>
             </ListItem>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
-              onPress={() => navigate("Albums")}
+              style={{
+                borderBottomWidth: 0,
+                backgroundColor: "rgb(233, 233, 239)"
+              }}
+              onPress={() =>
+                navigate("Albums", {
+                  listSong: this.state.dataSource
+                })
+              }
             >
               <Thumbnail square source={require("./images/icons/album.png")} />
               <Body>
-                  <Text>Albums</Text>
+                <Text>Albums</Text>
               </Body>
             </ListItem>
             <ListItem
-              style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
-              onPress={() => navigate("Artists")}
+              style={{
+                borderBottomWidth: 0,
+                backgroundColor: "rgb(233, 233, 239)"
+              }}
+              onPress={() => navigate("Artists", {
+                listSong: this.state.dataSource
+              })}
             >
               <Thumbnail square source={require("./images/icons/artist.png")} />
               <Body>
-                  <Text>Artists</Text>
+                <Text>Artists</Text>
               </Body>
             </ListItem>
           </List>
@@ -96,7 +139,7 @@ const SimpleApp = StackNavigator({
   Albums: { screen: albumScreen },
   Artists: { screen: artistScreen },
   Favou: { screen: likedScreen },
-  Play: {screen: playScreen},
+  Play: { screen: playScreen }
 });
 
 export default class App extends React.Component {

@@ -39,28 +39,39 @@ export default class songsScreen extends Component<{}> {
   static navigationOptions = {
     title: "All songs"
   };
-  
+
   constructor(props) {
     super(props);
-    var datab = [];
+    var data = [];
     this.state = {
-      dataSource: datab
+      dataSource: data
     };
-    var RNFS = require("react-native-fs");
-    var dir = RNFS.ExternalStorageDirectoryPath + "/Music";
-    RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
-      .then((result) => {
-        for (index = 0; index < result.length; ++index) {
-          RNMusicMetadata.getMetadata([result[index].path])
-          .then(tracks => {
-            datab.push(tracks[0]);
-            this.setState({ ...this.state.dataSource, datab });
-          })
-          .catch(err => {
-            console.error(err);
-          });
-        }
-      });
+    const { params } = this.props.navigation.state;
+    params.listSong.forEach(function(item) {
+     //console.log('data',item);
+     data.push(item);
+    });
+    this.setState({ ...this.state.dataSource, data });
+    //console.log('datasource',this.state.dataSource);
+    data.forEach(function(item) {
+      console.log('data',item);
+      //data.push(item);
+    });
+    //var RNFS = require("react-native-fs");
+    //var dir = RNFS.ExternalStorageDirectoryPath + "/Music";
+    //RNFS.readDir(dir) // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+    //  .then(result => {
+    //    for (index = 0; index < result.length; ++index) {
+    //      RNMusicMetadata.getMetadata([result[index].path])
+    //        .then(tracks => {
+    //          datab.push(tracks[0]);
+    //          this.setState({ ...this.state.dataSource, datab });
+    //        })
+    //        .catch(err => {
+    //          console.error(err);
+    //        });
+    //    }
+    //  });
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -71,9 +82,17 @@ export default class songsScreen extends Component<{}> {
             dataArray={this.state.dataSource}
             renderRow={item => (
               <ListItem
-                style={{ borderBottomWidth: 0, backgroundColor: "rgb(233, 233, 239)" }}
-                onPress={() => navigate("Play",{songTitle: item.title, curentSong: item, listSong: this.state.dataSource})}
-                title="All songs"
+                style={{
+                  borderBottomWidth: 0,
+                  backgroundColor: "rgb(233, 233, 239)"
+                }}
+                onPress={() =>
+                  navigate("Play", {
+                    songTitle: item.title,
+                    curentSong: item,
+                    listSong: this.state.dataSource
+                  })
+                }
               >
                 <Thumbnail
                   square
@@ -84,7 +103,7 @@ export default class songsScreen extends Component<{}> {
                   <Text note>{item.artist}</Text>
                 </Body>
                 <Right>
-                  <Text note>{Math.round(item.duration/60 * 100) / 100}</Text>
+                  <Text note>{Math.round(item.duration / 60 * 100) / 100}</Text>
                 </Right>
               </ListItem>
             )}
