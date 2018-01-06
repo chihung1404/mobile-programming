@@ -38,7 +38,7 @@ var Sound = require("react-native-sound");
 export default class playScreen extends Component<{}> {
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <Header style={{ backgroundColor: "rgb(17, 17, 17)" }}>
+      <Header style={{ backgroundColor: "rgb(40, 40, 40)" }}>
         <Left>
           <Button transparent onPress={() => navigation.goBack()}>
             <Icon name="arrow-back" />
@@ -56,11 +56,12 @@ export default class playScreen extends Component<{}> {
   constructor(props) {
     super(props);
     var temp = [];
+    var play = false;
     this.state = {
       dataSource: temp,
       nativeSound: null,
       currentSong: null,
-      playing: true,
+      playing: play,
       currentfile: null,
       songTitle: "",
       artist: "",
@@ -73,6 +74,11 @@ export default class playScreen extends Component<{}> {
     });
 
     if (temp[0] != null) {
+      if (this.state.playing){
+        this.state.currentSong.stop();
+        this.state.currentSong.release();
+      }
+      play = true;
       this.setState({ ...this.state.dataSource, temp });
       setTimeout(() => {
         var whoosh = new Sound(params.curentSong.uri, "", error => {
@@ -83,7 +89,8 @@ export default class playScreen extends Component<{}> {
             currentSong: whoosh,
             currentfile: params.curentSong,
             songTitle: params.curentSong.title,
-            artist: params.curentSong.artist
+            artist: params.curentSong.artist,
+            playing: play
           });
           console.log("this.state.currentfile", this.state.currentfile);
         });
@@ -394,19 +401,19 @@ export default class playScreen extends Component<{}> {
     }
   }
   componentWillMount() {
-    //MusicControl.setNowPlaying({
-    //  title: "Billie Jean",
-    //  artwork: "https://i.imgur.com/e1cpwdo.png", // URL or RN's image require()
-    //  artist: "Michael Jackson",
-    //  album: "Thriller",
-     // genre: "Post-disco, Rhythm and Blues, Funk, Dance-pop",
-    //  duration: 294, // (Seconds)
-    //  description: "", // Android Only
-    //  color: 0xffffff, // Notification Color - Android Only
-    //  date: "1983-01-02T00:00:00Z", // Release Date (RFC 3339) - Android Only
-    //  rating: 84, // Android Only (Boolean or Number depending on the type)
-    //  notificationIcon: "my_custom_icon" // Android Only (String), Android Drawable resource name for a custom notification icon
-    //});
+    MusicControl.setNowPlaying({
+      title: "demo",
+      artwork: "https://i.imgur.com/e1cpwdo.png", // URL or RN's image require()
+      artist: "Michael Jackson",
+      album: "Thriller",
+      genre: "Post-disco, Rhythm and Blues, Funk, Dance-pop",
+     duration: 294, // (Seconds)
+      description: "", // Android Only
+      color: 0xffffff, // Notification Color - Android Only
+      date: "1983-01-02T00:00:00Z", // Release Date (RFC 3339) - Android Only
+      rating: 84, // Android Only (Boolean or Number depending on the type)
+      notificationIcon: "my_custom_icon" // Android Only (String), Android Drawable resource name for a custom notification icon
+    });
     // Basic Controls
     MusicControl.enableControl("play", true);
     MusicControl.enableControl("pause", true);
@@ -444,9 +451,9 @@ export default class playScreen extends Component<{}> {
       this.startStopButton();
     }
     return (
-      <Container style={{ backgroundColor: "rgb(17, 17, 17)" }}>
+      <Container style={{ backgroundColor: "rgb(40, 40, 40)" }}>
         <Grid>
-          <Row size={3} style={{ backgroundColor: "rgb(17, 17, 17)" }}>
+          <Row size={3} style={{ backgroundColor: "rgb(40, 40, 40)" }}>
             <Col size={1} />
             <Col size={4} style={styles.rowControl}>
               <Image
@@ -540,6 +547,14 @@ export default class playScreen extends Component<{}> {
       this.setPlaying();
     });
   }
+
+  componentWillUnmount(){
+    this.setPlaying = this.setPlaying.bind(this);
+    this.playNext = this.playNext.bind(this);
+    this.playPrev = this.playPrev.bind(this);
+    this.loopOption = this.loopOption.bind(this);
+    this.shuffleOption = this.shuffleOption.bind(this);
+  }
 }
 
 const styles = StyleSheet.create({
@@ -555,7 +570,7 @@ const styles = StyleSheet.create({
   playControl: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#rgb(17, 17, 17)"
+    backgroundColor: "#rgb(40, 40, 40)"
   },
   stretch: {
     width: 50,

@@ -41,7 +41,7 @@ import RNMusicMetadata from "react-native-music-metadata";
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header: (
-      <Header style={{ backgroundColor: "rgb(28, 28, 28)" }}>
+      <Header style={{ backgroundColor: "rgb(40, 40, 40)" }}>
         <Left >
         <Button transparent>
               <Icon name='menu' />

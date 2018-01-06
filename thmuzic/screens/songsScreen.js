@@ -38,7 +38,7 @@ const instructions = Platform.select({
 export default class songsScreen extends Component<{}> {
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <Header style={{ backgroundColor: "rgb(28, 28, 28)" }}>
+      <Header style={{ backgroundColor: "rgb(40, 40, 40)" }}>
         <Left>
           <Button transparent onPress={() => navigation.goBack()}>
             <Icon name="arrow-back" />
