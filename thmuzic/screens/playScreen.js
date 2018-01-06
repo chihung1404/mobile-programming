@@ -114,6 +114,7 @@ export default class playScreen extends Component<{}> {
     this.shuffleOption = this.shuffleOption.bind(this);
     this.loopButton = this.loopButton.bind(this);
     this.shuffleButton = this.shuffleButton.bind(this);
+    this.stop = this.stop.bind(this);
   }
 
   //--------------------------
@@ -150,6 +151,11 @@ export default class playScreen extends Component<{}> {
     if (this.state.playing) {
       this.state.currentSong.pause();
       this.setState({ playing: false });
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PAUSED, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+        elapsedTime: 103, // (Seconds)
+        bufferedTime: 200, // Android Only (Seconds)
+      });
       return;
     } else {
       this.state.currentSong.play(success => {
@@ -162,9 +168,18 @@ export default class playScreen extends Component<{}> {
         }
       });
       this.setState({ playing: true });
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+        elapsedTime: 103, // (Seconds)
+        bufferedTime: 200, // Android Only (Seconds)
+      });
     }
   }
-
+  stop(){
+    this.state.currentSong.stop();
+    this.state.currentSong.release();
+    this.setState({ playing: false });
+  }
   startStopButton() {
     var img = this.state.playing
       ? "data:../images/icons/pause.png"
@@ -304,6 +319,11 @@ export default class playScreen extends Component<{}> {
               });
             }, 50);
           }, 250);
+          MusicControl.updatePlayback({
+            state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+            elapsedTime: 103, // (Seconds)
+            bufferedTime: 200, // Android Only (Seconds)
+          });
         }
     }
   }
@@ -359,7 +379,6 @@ export default class playScreen extends Component<{}> {
           }, 50);
         }, 250);
         break;
-        break;
       case false:
         if (index === 0) {
           this.state.currentSong.stop(() => {
@@ -397,15 +416,20 @@ export default class playScreen extends Component<{}> {
               });
             }, 50);
           }, 250);
+          MusicControl.updatePlayback({
+            state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+            elapsedTime: 103, // (Seconds)
+            bufferedTime: 200, // Android Only (Seconds)
+          });
         }
     }
   }
   componentWillMount() {
     MusicControl.setNowPlaying({
-      title: "demo",
+      title: "Xin Dung Lang Im",
       artwork: "https://i.imgur.com/e1cpwdo.png", // URL or RN's image require()
-      artist: "Michael Jackson",
-      album: "Thriller",
+      artist: "Soobin Hoang Son",
+      album: "Xin Dung Im Lang ",
       genre: "Post-disco, Rhythm and Blues, Funk, Dance-pop",
      duration: 294, // (Seconds)
       description: "", // Android Only
@@ -420,26 +444,12 @@ export default class playScreen extends Component<{}> {
     MusicControl.enableControl("stop", false);
     MusicControl.enableControl("nextTrack", true);
     MusicControl.enableControl("previousTrack", true);
-
-    // Seeking
-    MusicControl.enableControl("seek", true); // Android only
-    MusicControl.enableControl("skipForward", true);
-    MusicControl.enableControl("skipBackward", true);
-
-    // Android Specific Options
-    MusicControl.enableControl("setRating", false);
-    MusicControl.enableControl("volume", true); // Only affected when remoteVolume is enabled
-    MusicControl.enableControl("remoteVolume", true);
-
     MusicControl.enableControl("closeNotification", true, { when: "always" });
+
     MusicControl.updatePlayback({
       state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
-      speed: 1, // Playback Rate
       elapsedTime: 103, // (Seconds)
       bufferedTime: 200, // Android Only (Seconds)
-      volume: 10, // Android Only (Number from 0 to maxVolume) - Only used when remoteVolume is enabled
-      maxVolume: 10, // Android Only (Number) - Only used when remoteVolume is enabled
-      rating: MusicControl.RATING_PERCENTAGE // Android Only (RATING_HEART, RATING_THUMBS_UP_DOWN, RATING_3_STARS, RATING_4_STARS, RATING_5_STARS, RATING_PERCENTAGE)
     });
   }
 
@@ -519,7 +529,7 @@ export default class playScreen extends Component<{}> {
     });
 
     MusicControl.on("stop", () => {
-      this.props.dispatch(stopRemoteControl());
+      this.stop();
     });
 
     MusicControl.on("nextTrack", () => {
@@ -530,21 +540,9 @@ export default class playScreen extends Component<{}> {
       this.playPrev();
     });
 
-    MusicControl.on("seekForward", () => {});
-    MusicControl.on("seekBackward", () => {});
-
-    MusicControl.on("seek", pos => {}); // Android only (Seconds)
-    MusicControl.on("volume", volume => {}); // Android only (0 to maxVolume) - Only fired when remoteVolume is enabled
-
-    // Android Only (Boolean for RATING_HEART or RATING_THUMBS_UP_DOWN, Number for other types)
-    MusicControl.on("setRating", rating => {});
-
-    MusicControl.on("skipForward", () => {});
-    MusicControl.on("skipBackward", () => {});
-
     // Android Only
     MusicControl.on("closeNotification", () => {
-      this.setPlaying();
+      this.stop();
     });
   }
 
