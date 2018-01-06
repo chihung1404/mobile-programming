@@ -285,6 +285,11 @@ export default class playScreen extends Component<{}> {
         if (index === this.state.dataSource.length - 1) {
           this.state.currentSong.stop(() => {
             this.state.currentSong.play();
+            MusicControl.updatePlayback({
+              state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+              elapsedTime: 103, // (Seconds)
+              bufferedTime: 200, // Android Only (Seconds)
+            });
           });
         } else {
           this.state.currentSong.stop();
@@ -383,6 +388,11 @@ export default class playScreen extends Component<{}> {
         if (index === 0) {
           this.state.currentSong.stop(() => {
             this.state.currentSong.play();
+            MusicControl.updatePlayback({
+              state: MusicControl.STATE_PLAYING, // (STATE_ERROR, STATE_STOPPED, STATE_PLAYING, STATE_PAUSED, STATE_BUFFERING)
+              elapsedTime: 103, // (Seconds)
+              bufferedTime: 200, // Android Only (Seconds)
+            });
           });
         } else {
           this.state.currentSong.stop();
